@@ -1,48 +1,26 @@
 import osmnx as ox
-from pathlib import Path
+import networkx as nx
 
+valdosta = ox.load_graphml("valdosta_road_network.graphml")
 
-# Create Valdosta Graph
+# add the max speeds for edges that are missing speeds
+valdosta = ox.add_edge_speeds(valdosta)
 
-valdosta_graph = ox.graph.graph_from_place(
-    "Valdosta, Georgia, USA",
-    network_type="drive",
-    simplify=True
+# add the estimated travel times for edges - time is measured in seconds
+valdosta = ox.add_edge_travel_times(valdosta)
+
+# for node_id, data in list(valdosta.nodes(data=True))[:5]:
+#     print(node_id, data)
+#
+for u, v, key, data in list(valdosta.edges(keys=True, data=True))[:100]:
+    print(f"{u} -> {v} [{key}]")
+    print(data)
+    print()
+
+print(f"Directed: {valdosta.is_directed()}")
+print(f"Multigraph: {valdosta.is_multigraph()}")
+
+print(
+    "Weakly connected components:",
+    nx.number_weakly_connected_components(valdosta),
 )
-
-print("Network downloaded.")
-print(f"Valdosta Nodes: {valdosta_graph.number_of_nodes():,}")
-print(f"Valdosta Edges: {valdosta_graph.number_of_edges():,}")
-
-ox.io.save_graphml(
-    valdosta_graph,
-    filepath="valdosta_road_network.graphml",
-)
-
-print(f"Saved network to: valdosta_road_network.graphml")
-
-# ox.plot.plot_graph(valdosta_graph, save=True, filepath="valdosta_road_network.graphml")
-
-fig, ax = ox.plot.plot_graph(valdosta_graph, save=True, filepath="valdosta_road_network.png")
-print(f"Saved network to: valdosta_road_network.png")
-# Create Kennesaw Graph
-
-kennesaw_graph = ox.graph.graph_from_place(
-    "Kennesaw, Georgia, USA",
-    network_type="drive",
-    simplify=True
-)
-
-print("Network downloaded.")
-print(f"Kennesaw Nodes: {kennesaw_graph.number_of_nodes():,}")
-print(f"Kennesaw Edges: {kennesaw_graph.number_of_edges():,}")
-
-ox.io.save_graphml(
-    kennesaw_graph,
-    filepath="kennesaw_road_network.graphml",
-)
-
-print(f"Saved network to: kennesaw_road_network.graphml")
-
-# ox.plot.plot_graph(kennesaw_graph)
-fig2, ax2 = ox.plot.plot_graph(kennesaw_graph, save=True, filepath="kennesaw_road_network.png")
