@@ -12379,7 +12379,7 @@
     <edge source="71012403" target="71111436" id="0">
       <data key="d9">[9371660, 9373829]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Orange Street', 'West Magnolia Street']</data>
+      <data key="d11">['West Magnolia Street', 'Orange Street']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">354.40779517905355</data>
@@ -14072,7 +14072,7 @@
     <edge source="71022093" target="71027136" id="0">
       <data key="d9">[1080679692, 1080679693, 374198486, 374198487]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">West Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -14442,7 +14442,7 @@
     <edge source="71022404" target="71074887" id="0">
       <data key="d9">[51919188, 1080679646]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -16367,7 +16367,7 @@
     <edge source="71026551" target="71078070" id="0">
       <data key="d9">[9369892, 9372445]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Palmetto Street', 'East Rogers Street']</data>
+      <data key="d11">['East Rogers Street', 'Palmetto Street']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">191.57554876308492</data>
@@ -16576,7 +16576,7 @@
     <edge source="71027002" target="71058254" id="0">
       <data key="d9">[1080679714, 1080679715, 1080679716]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">Norman Drive</data>
       <data key="d12">False</data>
@@ -16912,7 +16912,7 @@
     <edge source="71027129" target="71099964" id="0">
       <data key="d9">[9373260, 9374526]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Summerlin Street', 'Willam Lane']</data>
+      <data key="d11">['Willam Lane', 'Summerlin Street']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">103.76631598869714</data>
@@ -17025,7 +17025,7 @@
     <edge source="71027136" target="71022093" id="0">
       <data key="d9">[1080679692, 1080679693, 374198486, 374198487]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">West Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -19385,7 +19385,7 @@
     <edge source="71030911" target="71030920" id="1">
       <data key="d9">[9375280, 9373835, 1498120647]</data>
       <data key="d10">residential</data>
-      <data key="d11">['East Mary Street', 'Murphy Street']</data>
+      <data key="d11">['Murphy Street', 'East Mary Street']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">494.71268183152756</data>
@@ -19430,7 +19430,7 @@
     <edge source="71030920" target="71030911" id="1">
       <data key="d9">[9375280, 9373835, 1498120647]</data>
       <data key="d10">residential</data>
-      <data key="d11">['East Mary Street', 'Murphy Street']</data>
+      <data key="d11">['Murphy Street', 'East Mary Street']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">494.71268183152745</data>
@@ -19700,7 +19700,7 @@
     <edge source="71030994" target="71061060" id="0">
       <data key="d9">[9374945, 970496940]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Clover Drive', 'East Moore Street']</data>
+      <data key="d11">['East Moore Street', 'Clover Drive']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">303.4553649453875</data>
@@ -20818,7 +20818,7 @@
     <edge source="71033876" target="71049270" id="0">
       <data key="d9">[9372777, 9372454]</data>
       <data key="d10">unclassified</data>
-      <data key="d11">['Baytree Drive', 'Springhill Drive']</data>
+      <data key="d11">['Springhill Drive', 'Baytree Drive']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">474.5882171805064</data>
@@ -21497,7 +21497,7 @@
     <edge source="71034443" target="71059865" id="0">
       <data key="d9">[9374252, 9373782]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Lamar Street', 'Clark Street']</data>
+      <data key="d11">['Clark Street', 'Lamar Street']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">259.94854013551634</data>
@@ -22808,7 +22808,7 @@
     <edge source="71036267" target="71036271" id="0">
       <data key="d9">[583387633, 1079842406]</data>
       <data key="d10">primary</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">35 mph</data>
       <data key="d11">North Ashley Street</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -22853,7 +22853,7 @@
     <edge source="71036271" target="71036267" id="0">
       <data key="d9">[583387633, 1079842406]</data>
       <data key="d10">primary</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">35 mph</data>
       <data key="d11">North Ashley Street</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -23342,7 +23342,7 @@
       <data key="d9">[1079842392, 349678800]</data>
       <data key="d10">primary</data>
       <data key="d16">2</data>
-      <data key="d17">['35 mph', '45 mph']</data>
+      <data key="d17">['45 mph', '35 mph']</data>
       <data key="d11">North Valdosta Road</data>
       <data key="d12">True</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -23367,7 +23367,7 @@
       <data key="d9">[1080679673, 9370263]</data>
       <data key="d10">primary</data>
       <data key="d16">['3', '2']</data>
-      <data key="d17">['35 mph', '25 mph']</data>
+      <data key="d17">['25 mph', '35 mph']</data>
       <data key="d11">J.M. Beck Overpass</data>
       <data key="d12">True</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -23391,7 +23391,7 @@
     <edge source="71036522" target="71036592" id="0">
       <data key="d9">[374198469, 1080679671]</data>
       <data key="d10">primary</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">35 mph</data>
       <data key="d11">J.M. Beck Overpass</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -23477,7 +23477,7 @@
     <edge source="71036592" target="71036522" id="0">
       <data key="d9">[374198469, 1080679671]</data>
       <data key="d10">primary</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">35 mph</data>
       <data key="d11">J.M. Beck Overpass</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -24543,7 +24543,7 @@
       <data key="d9">[1080679672, 9370363]</data>
       <data key="d10">primary</data>
       <data key="d16">2</data>
-      <data key="d17">['35 mph', '25 mph']</data>
+      <data key="d17">['25 mph', '35 mph']</data>
       <data key="d11">West Crane Avenue</data>
       <data key="d12">True</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -27368,7 +27368,7 @@
     <edge source="71045483" target="71055845" id="0">
       <data key="d9">[9371948, 9372751]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Smith Street', 'Brookhaven Drive']</data>
+      <data key="d11">['Brookhaven Drive', 'Smith Street']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">496.9879977619651</data>
@@ -29677,7 +29677,7 @@
     <edge source="71049270" target="71033876" id="0">
       <data key="d9">[9372777, 9372454]</data>
       <data key="d10">unclassified</data>
-      <data key="d11">['Baytree Drive', 'Springhill Drive']</data>
+      <data key="d11">['Springhill Drive', 'Baytree Drive']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">474.58821718050655</data>
@@ -30484,7 +30484,7 @@
     <edge source="71050923" target="71062426" id="0">
       <data key="d9">[1080679640, 1080679645]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -32772,7 +32772,7 @@
     <edge source="71055845" target="71045483" id="0">
       <data key="d9">[9371948, 9372751]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Smith Street', 'Brookhaven Drive']</data>
+      <data key="d11">['Brookhaven Drive', 'Smith Street']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">496.98799776196506</data>
@@ -33063,7 +33063,7 @@
     <edge source="71056686" target="71062426" id="0">
       <data key="d9">[1080679645, 1080679639]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -33880,7 +33880,7 @@
     <edge source="71058254" target="71027002" id="0">
       <data key="d9">[1080679714, 1080679715, 1080679716]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">Norman Drive</data>
       <data key="d12">False</data>
@@ -34082,7 +34082,7 @@
     <edge source="71058969" target="9905301846" id="0">
       <data key="d9">[1080679643, 51919188, 1080679644]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['6', '5', '4']</data>
+      <data key="d16">['6', '4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -34954,7 +34954,7 @@
     <edge source="71059865" target="71034443" id="0">
       <data key="d9">[9374252, 9373782]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Lamar Street', 'Clark Street']</data>
+      <data key="d11">['Clark Street', 'Lamar Street']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">259.94854013551634</data>
@@ -35248,7 +35248,7 @@
       <data key="d9">[1080679664, 197397415]</data>
       <data key="d10">primary</data>
       <data key="d16">5</data>
-      <data key="d17">['35 mph', '45 mph']</data>
+      <data key="d17">['45 mph', '35 mph']</data>
       <data key="d11">South Patterson Street</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
       <data key="d12">False</data>
@@ -35293,7 +35293,7 @@
       <data key="d9">[1080679664, 197397415]</data>
       <data key="d10">primary</data>
       <data key="d16">5</data>
-      <data key="d17">['35 mph', '45 mph']</data>
+      <data key="d17">['45 mph', '35 mph']</data>
       <data key="d11">South Patterson Street</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
       <data key="d12">False</data>
@@ -35324,7 +35324,7 @@
     <edge source="71060892" target="71060910" id="0">
       <data key="d9">[1080679664, 1080679669]</data>
       <data key="d10">primary</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">35 mph</data>
       <data key="d11">South Patterson Street</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -35336,7 +35336,7 @@
     <edge source="71060910" target="71029532" id="0">
       <data key="d9">[1300212611, 1080679668, 9372085]</data>
       <data key="d10">secondary</data>
-      <data key="d16">['2', '4']</data>
+      <data key="d16">['4', '2']</data>
       <data key="d11">Griffin Avenue</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
@@ -35346,7 +35346,7 @@
     <edge source="71060910" target="71060892" id="0">
       <data key="d9">[1080679664, 1080679669]</data>
       <data key="d10">primary</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">35 mph</data>
       <data key="d11">South Patterson Street</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -35499,7 +35499,7 @@
     </edge>
     <edge source="71060967" target="71058055" id="0">
       <data key="d9">[9371702, 9373767]</data>
-      <data key="d10">['residential', 'unclassified']</data>
+      <data key="d10">['unclassified', 'residential']</data>
       <data key="d11">['North Underpass', 'South Patterson Street']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
@@ -35697,7 +35697,7 @@
     <edge source="71061060" target="71030994" id="0">
       <data key="d9">[9374945, 970496940]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Clover Drive', 'East Moore Street']</data>
+      <data key="d11">['East Moore Street', 'Clover Drive']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">303.4553649453875</data>
@@ -35954,7 +35954,7 @@
     <edge source="71062426" target="71056686" id="0">
       <data key="d9">[1080679645, 1080679639]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -35966,7 +35966,7 @@
     <edge source="71062426" target="71050923" id="0">
       <data key="d9">[1080679640, 1080679645]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -37070,7 +37070,7 @@
     <edge source="71065393" target="71125178" id="0">
       <data key="d9">[9373145, 9374759]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Rouse Road', 'Roberts Street']</data>
+      <data key="d11">['Roberts Street', 'Rouse Road']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">321.32850010910346</data>
@@ -37573,7 +37573,7 @@
       <data key="d9">[41937236, 1170448421]</data>
       <data key="d10">secondary</data>
       <data key="d16">5</data>
-      <data key="d17">['35 mph', '45 mph']</data>
+      <data key="d17">['45 mph', '35 mph']</data>
       <data key="d11">East Park Avenue</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -37635,7 +37635,7 @@
       <data key="d9">[41937236, 1170448421]</data>
       <data key="d10">secondary</data>
       <data key="d16">5</data>
-      <data key="d17">['35 mph', '45 mph']</data>
+      <data key="d17">['45 mph', '35 mph']</data>
       <data key="d11">East Park Avenue</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
@@ -37645,7 +37645,7 @@
     <edge source="71066169" target="71066200" id="0">
       <data key="d9">[1170448414, 1170448415]</data>
       <data key="d10">secondary</data>
-      <data key="d16">['2', '4']</data>
+      <data key="d16">['4', '2']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Park Avenue</data>
       <data key="d12">False</data>
@@ -40117,7 +40117,7 @@
     <edge source="71072442" target="71145242" id="0">
       <data key="d9">[9375369, 9372236]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Bancroft Road', 'Wedgewood Drive']</data>
+      <data key="d11">['Wedgewood Drive', 'Bancroft Road']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">367.9099629811477</data>
@@ -40664,7 +40664,7 @@
     <edge source="71074887" target="71022404" id="0">
       <data key="d9">[51919188, 1080679646]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '4']</data>
+      <data key="d16">['4', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -41041,7 +41041,7 @@
     <edge source="71078070" target="71026551" id="0">
       <data key="d9">[9369892, 9372445]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Palmetto Street', 'East Rogers Street']</data>
+      <data key="d11">['East Rogers Street', 'Palmetto Street']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">191.5755487630849</data>
@@ -42392,7 +42392,7 @@
     <edge source="71082743" target="71082900" id="0">
       <data key="d9">[9373396, 9372629]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Cason Street', 'Branch Street Lane']</data>
+      <data key="d11">['Branch Street Lane', 'Cason Street']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">167.1010358920474</data>
@@ -47397,7 +47397,7 @@
     <edge source="71096512" target="71048168" id="0">
       <data key="d9">[9373665, 9371081]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Jackson Lane', 'Magnolia Lane']</data>
+      <data key="d11">['Magnolia Lane', 'Jackson Lane']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">204.81665954144322</data>
@@ -48541,7 +48541,7 @@
     <edge source="71097739" target="71059731" id="1">
       <data key="d9">[9373216, 9371649]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Holly Drive', 'East College Street']</data>
+      <data key="d11">['East College Street', 'Holly Drive']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">582.4224878525702</data>
@@ -48751,7 +48751,7 @@
     <edge source="71099922" target="71059403" id="0">
       <data key="d9">[9373258, 9373964]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Victoria Drive', 'Vinebrook Drive']</data>
+      <data key="d11">['Vinebrook Drive', 'Victoria Drive']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">564.6061304866216</data>
@@ -48778,7 +48778,7 @@
     <edge source="71099964" target="71027129" id="0">
       <data key="d9">[9373260, 9374526]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Summerlin Street', 'Willam Lane']</data>
+      <data key="d11">['Willam Lane', 'Summerlin Street']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">103.76631598869714</data>
@@ -49313,7 +49313,7 @@
     <edge source="71103476" target="71110287" id="0">
       <data key="d9">[9373385, 9374716]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['North Lee Street', 'South Lee Street']</data>
+      <data key="d11">['South Lee Street', 'North Lee Street']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">116.09065765034316</data>
@@ -50489,7 +50489,7 @@
       <data key="d9">[539084800, 1080852283, 1080679731]</data>
       <data key="d10">trunk</data>
       <data key="d16">['3', '2']</data>
-      <data key="d17">['35 mph', '45 mph']</data>
+      <data key="d17">['45 mph', '35 mph']</data>
       <data key="d11">Saint Augustine Road</data>
       <data key="d12">True</data>
       <data key="d19">GA 133</data>
@@ -50534,7 +50534,7 @@
     <edge source="71107079" target="71107084" id="0">
       <data key="d9">[539084809, 1080852285, 539084820, 150384773]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['4', '3', '2']</data>
+      <data key="d16">['3', '4', '2']</data>
       <data key="d17">['45 mph', '55 mph']</data>
       <data key="d11">Saint Augustine Road</data>
       <data key="d12">True</data>
@@ -50849,7 +50849,7 @@
     <edge source="71107803" target="71116229" id="0">
       <data key="d9">[9375234, 9373630]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Floyd Street', 'Mills Street']</data>
+      <data key="d11">['Mills Street', 'Floyd Street']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">236.83643146593278</data>
@@ -52424,7 +52424,7 @@
     <edge source="71111436" target="71012403" id="0">
       <data key="d9">[9371660, 9373829]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Orange Street', 'West Magnolia Street']</data>
+      <data key="d11">['West Magnolia Street', 'Orange Street']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">354.4077951790535</data>
@@ -54305,7 +54305,7 @@
     <edge source="71116229" target="71107803" id="0">
       <data key="d9">[9375234, 9373630]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Floyd Street', 'Mills Street']</data>
+      <data key="d11">['Mills Street', 'Floyd Street']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">236.83643146593275</data>
@@ -54439,7 +54439,7 @@
     <edge source="71116463" target="2345976883" id="0">
       <data key="d9">[374198479, 349678799]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['5', '2']</data>
+      <data key="d16">['2', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">North Valdosta Road</data>
       <data key="d12">True</data>
@@ -55425,7 +55425,7 @@
     <edge source="71125178" target="71065393" id="0">
       <data key="d9">[9373145, 9374759]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Rouse Road', 'Roberts Street']</data>
+      <data key="d11">['Roberts Street', 'Rouse Road']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">321.32850010910346</data>
@@ -55597,7 +55597,7 @@
     <edge source="71126720" target="71130837" id="0">
       <data key="d9">[9376331, 1039887542]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Moss Oak Drive', 'River Way']</data>
+      <data key="d11">['River Way', 'Moss Oak Drive']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">191.15897134779462</data>
@@ -56165,7 +56165,7 @@
     <edge source="71130837" target="71126720" id="0">
       <data key="d9">[9376331, 1039887542]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Moss Oak Drive', 'River Way']</data>
+      <data key="d11">['River Way', 'Moss Oak Drive']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">191.1589713477946</data>
@@ -58073,7 +58073,7 @@
     <edge source="71145242" target="71072442" id="0">
       <data key="d9">[9375369, 9372236]</data>
       <data key="d10">residential</data>
-      <data key="d11">['Bancroft Road', 'Wedgewood Drive']</data>
+      <data key="d11">['Wedgewood Drive', 'Bancroft Road']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">367.9099629811477</data>
@@ -58455,7 +58455,7 @@
     <edge source="71148978" target="71115065" id="0">
       <data key="d9">[1079871488, 9377149]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['2', '4']</data>
+      <data key="d16">['4', '2']</data>
       <data key="d11">Northside Drive</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -59752,7 +59752,7 @@
     <edge source="2342895236" target="5997134747" id="0">
       <data key="d9">[1346163084, 1346163085, 1346163086, 1346163087, 1346163088, 1346163089]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['4', '3', '2']</data>
+      <data key="d16">['3', '4', '2']</data>
       <data key="d17">45 mph</data>
       <data key="d11">Inner Perimeter Road</data>
       <data key="d12">True</data>
@@ -60020,7 +60020,7 @@
       <data key="d9">[374198474, 225807870]</data>
       <data key="d10">primary</data>
       <data key="d16">2</data>
-      <data key="d17">['35 mph', '45 mph']</data>
+      <data key="d17">['45 mph', '35 mph']</data>
       <data key="d11">North Ashley Street</data>
       <data key="d12">True</data>
       <data key="d19">US 41 Business;GA 7 Business</data>
@@ -62233,7 +62233,7 @@
       <data key="d9">[374198489, 1080679690, 1080679691]</data>
       <data key="d10">trunk</data>
       <data key="d16">['3', '2']</data>
-      <data key="d17">['35 mph', '45 mph']</data>
+      <data key="d17">['45 mph', '35 mph']</data>
       <data key="d11">West Hill Avenue</data>
       <data key="d12">True</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -62603,7 +62603,7 @@
     </edge>
     <edge source="4689106118" target="8722129128" id="0">
       <data key="d9">[941859268, 941859276, 475107958]</data>
-      <data key="d10">['residential', 'unclassified']</data>
+      <data key="d10">['unclassified', 'residential']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">511.3743098688966</data>
@@ -64704,7 +64704,7 @@
     <edge source="9374082884" target="12707558369" id="0">
       <data key="d9">[1383012856, 132052171, 1372403677]</data>
       <data key="d10">secondary</data>
-      <data key="d16">['2', '4']</data>
+      <data key="d16">['4', '2']</data>
       <data key="d11">North Oak Street Extension</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -64934,7 +64934,7 @@
     <edge source="9898137549" target="71036306" id="0">
       <data key="d9">[1079842442, 1079842402]</data>
       <data key="d10">secondary</data>
-      <data key="d16">['2', '4']</data>
+      <data key="d16">['4', '2']</data>
       <data key="d17">35 mph</data>
       <data key="d11">Woodrow Wilson Drive</data>
       <data key="d12">False</data>
@@ -65047,7 +65047,7 @@
     <edge source="9905301846" target="71058969" id="0">
       <data key="d9">[1080679643, 1080679644, 51919188]</data>
       <data key="d10">trunk</data>
-      <data key="d16">['6', '5', '4']</data>
+      <data key="d16">['4', '6', '5']</data>
       <data key="d17">45 mph</data>
       <data key="d11">East Hill Avenue</data>
       <data key="d19">US 84;US 221;GA 38</data>
@@ -65336,7 +65336,7 @@
     <edge source="12324789943" target="71033278" id="0">
       <data key="d9">[1372403676, 1561073508]</data>
       <data key="d10">secondary</data>
-      <data key="d16">['2', '4']</data>
+      <data key="d16">['4', '2']</data>
       <data key="d11">North Oak Street Extension</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
@@ -66370,7 +66370,7 @@
       <data key="d13">False</data>
       <data key="d14">6.09279456161119</data>
     </edge>
-    <data key="d0">2026-09-24 12:52:56</data>
+    <data key="d0">2026-09-24 21:06:24</data>
     <data key="d1">OSMnx 2.1.1</data>
     <data key="d2">epsg:4326</data>
     <data key="d3">True</data>

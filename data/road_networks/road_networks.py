@@ -21,8 +21,10 @@ ox.io.save_graphml(
 
 print(f"Saved network to: valdosta_road_network.graphml")
 
-ox.plot.plot_graph(valdosta_graph)
+# ox.plot.plot_graph(valdosta_graph, save=True, filepath="valdosta_road_network.graphml")
 
+fig, ax = ox.plot.plot_graph(valdosta_graph, save=True, filepath="valdosta_road_network.png")
+print(f"Saved network to: valdosta_road_network.png")
 # Create Kennesaw Graph
 
 kennesaw_graph = ox.graph.graph_from_place(
@@ -42,4 +44,5 @@ ox.io.save_graphml(
 
 print(f"Saved network to: kennesaw_road_network.graphml")
 
-ox.plot.plot_graph(kennesaw_graph)
+# ox.plot.plot_graph(kennesaw_graph)
+fig2, ax2 = ox.plot.plot_graph(kennesaw_graph, save=True, filepath="kennesaw_road_network.png")

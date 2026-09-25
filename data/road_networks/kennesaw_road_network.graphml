@@ -9318,7 +9318,7 @@
     <edge source="67642543" target="5384033033" id="0">
       <data key="d8">[994113368, 994113369, 631653327]</data>
       <data key="d9">['unclassified', 'residential']</data>
-      <data key="d10">['Crater Lake Drive', 'Crater Lake Drive Northwest', 'Vaughn Road']</data>
+      <data key="d10">['Crater Lake Drive', 'Vaughn Road', 'Crater Lake Drive Northwest']</data>
       <data key="d11">False</data>
       <data key="d12">False</data>
       <data key="d13">19.418098785411992</data>
@@ -9723,7 +9723,7 @@
     <edge source="67657703" target="4065308489" id="0">
       <data key="d8">[1047745381, 1047745382, 1526039687, 1526039688, 1526039689]</data>
       <data key="d9">primary</data>
-      <data key="d15">['5', '2', '6']</data>
+      <data key="d15">['6', '2', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">McCollum Parkway Northwest</data>
       <data key="d11">False</data>
@@ -9917,7 +9917,7 @@
     <edge source="67663552" target="10728681089" id="0">
       <data key="d8">[1421725228, 1421725229, 1153628823, 1153628824, 1153627739, 1153627741]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '3', '4', '2']</data>
+      <data key="d15">['3', '4', '2', '5']</data>
       <data key="d16">35 mph</data>
       <data key="d10">Old 41 Highway</data>
       <data key="d11">False</data>
@@ -10081,7 +10081,7 @@
     <edge source="67665401" target="3467948601" id="0">
       <data key="d8">[755645344, 755645347, 755645348, 755511478, 1072561053, 1072561054, 1072561055]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['6', '5', '7']</data>
+      <data key="d15">['6', '7', '5']</data>
       <data key="d16">40 mph</data>
       <data key="d10">Wade Green Road</data>
       <data key="d11">False</data>
@@ -10488,7 +10488,7 @@
     <edge source="67680128" target="322645128" id="0">
       <data key="d8">[591094693, 591094694, 1100772999, 591094695, 1484576713, 591094301]</data>
       <data key="d9">tertiary</data>
-      <data key="d15">['5', '4', '2']</data>
+      <data key="d15">['4', '2', '5']</data>
       <data key="d10">Old 41 Highway Northwest</data>
       <data key="d11">False</data>
       <data key="d12">True</data>
@@ -10623,7 +10623,7 @@
     <edge source="67680207" target="7610883011" id="0">
       <data key="d8">[993553235, 993553251, 993553237]</data>
       <data key="d9">tertiary</data>
-      <data key="d15">['5', '3', '4']</data>
+      <data key="d15">['3', '4', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">Old US 41 Highway Northwest</data>
       <data key="d11">False</data>
@@ -10804,7 +10804,7 @@
     <edge source="67684800" target="67988054" id="0">
       <data key="d8">[463432984, 9147437, 957920926]</data>
       <data key="d9">residential</data>
-      <data key="d10">['Jiles Road', 'Moon Station Road Northwest']</data>
+      <data key="d10">['Moon Station Road Northwest', 'Jiles Road']</data>
       <data key="d11">False</data>
       <data key="d12">True</data>
       <data key="d13">813.1637318900548</data>
@@ -11632,7 +11632,7 @@
     <edge source="67701273" target="2514321321" id="0">
       <data key="d8">[9136265, 244079362, 244079359]</data>
       <data key="d9">residential</data>
-      <data key="d10">['Creek Crossing Trail', 'Creek Crossing Trail Northwest', 'Kirkwood Drive']</data>
+      <data key="d10">['Creek Crossing Trail Northwest', 'Creek Crossing Trail', 'Kirkwood Drive']</data>
       <data key="d11">False</data>
       <data key="d12">True</data>
       <data key="d13">234.6606593054508</data>
@@ -13522,8 +13522,8 @@
     <edge source="67736691" target="11869558273" id="0">
       <data key="d8">[755535569, 1049961658, 1049961659, 1418903142]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '4']</data>
-      <data key="d16">['35 mph', '40 mph']</data>
+      <data key="d15">['4', '5']</data>
+      <data key="d16">['40 mph', '35 mph']</data>
       <data key="d10">Cherokee Street Northwest</data>
       <data key="d11">False</data>
       <data key="d12">False</data>
@@ -14252,7 +14252,7 @@
     <edge source="67749350" target="67864736" id="0">
       <data key="d8">[9144530, 9149725]</data>
       <data key="d9">residential</data>
-      <data key="d10">['Pine Drive Northwest', 'Melody Lane']</data>
+      <data key="d10">['Melody Lane', 'Pine Drive Northwest']</data>
       <data key="d11">False</data>
       <data key="d12">True</data>
       <data key="d13">299.4537331241214</data>
@@ -18127,7 +18127,7 @@
     <edge source="67848933" target="5422112636" id="0">
       <data key="d8">[1043424096, 920679170, 562432426, 562432427, 814813643, 1043424095]</data>
       <data key="d9">primary</data>
-      <data key="d15">['5', '3', '2']</data>
+      <data key="d15">['3', '2', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">McCollum Parkway Northwest</data>
       <data key="d11">True</data>
@@ -18532,7 +18532,7 @@
     <edge source="67864736" target="67749350" id="0">
       <data key="d8">[9144530, 9149725]</data>
       <data key="d9">residential</data>
-      <data key="d10">['Pine Drive Northwest', 'Melody Lane']</data>
+      <data key="d10">['Melody Lane', 'Pine Drive Northwest']</data>
       <data key="d11">False</data>
       <data key="d12">False</data>
       <data key="d13">299.4537331241214</data>
@@ -19998,7 +19998,7 @@
     <edge source="67926154" target="7057225930" id="0">
       <data key="d8">[1158638187, 1158638188, 1158638189, 1158638190, 755535568]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '4']</data>
+      <data key="d15">['4', '5']</data>
       <data key="d16">40 mph</data>
       <data key="d10">Cherokee Street Northwest</data>
       <data key="d11">False</data>
@@ -21007,7 +21007,7 @@
     <edge source="322645128" target="67680128" id="0">
       <data key="d8">[591094693, 591094694, 591094695, 1100772999, 1484576713, 591094301]</data>
       <data key="d9">tertiary</data>
-      <data key="d15">['5', '4', '2']</data>
+      <data key="d15">['4', '2', '5']</data>
       <data key="d10">Old 41 Highway Northwest</data>
       <data key="d11">False</data>
       <data key="d12">False</data>
@@ -21027,7 +21027,7 @@
     <edge source="322645139" target="2513322393" id="0">
       <data key="d8">[591094308, 591094291, 591094292, 591094298, 591094299]</data>
       <data key="d9">tertiary</data>
-      <data key="d15">['1', '5', '3', '2']</data>
+      <data key="d15">['1', '3', '2', '5']</data>
       <data key="d16">35 mph</data>
       <data key="d10">Old 41 Highway Northwest</data>
       <data key="d11">False</data>
@@ -21038,7 +21038,7 @@
     <edge source="322645139" target="2513319422" id="0">
       <data key="d8">[332408737, 332408738, 591094309, 591094313, 1314811026, 1314811028]</data>
       <data key="d9">trunk</data>
-      <data key="d15">['5', '3', '4', '2']</data>
+      <data key="d15">['3', '4', '2', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">Ernest West Barrett Parkway</data>
       <data key="d11">True</data>
@@ -22136,7 +22136,7 @@
     <edge source="2513322393" target="322645139" id="0">
       <data key="d8">[591094308, 591094291, 591094292, 591094298, 591094299]</data>
       <data key="d9">tertiary</data>
-      <data key="d15">['5', '1', '3', '2']</data>
+      <data key="d15">['1', '3', '2', '5']</data>
       <data key="d16">35 mph</data>
       <data key="d10">Old 41 Highway Northwest</data>
       <data key="d11">False</data>
@@ -24222,7 +24222,7 @@
     <edge source="2514321321" target="67701273" id="0">
       <data key="d8">[9136265, 244079362, 244079359]</data>
       <data key="d9">residential</data>
-      <data key="d10">['Creek Crossing Trail', 'Creek Crossing Trail Northwest', 'Kirkwood Drive']</data>
+      <data key="d10">['Creek Crossing Trail Northwest', 'Creek Crossing Trail', 'Kirkwood Drive']</data>
       <data key="d11">False</data>
       <data key="d12">False</data>
       <data key="d13">234.66065930545082</data>
@@ -25226,7 +25226,7 @@
     <edge source="3467948601" target="67665401" id="0">
       <data key="d8">[755645344, 755645347, 755645348, 755511478, 1072561053, 1072561054, 1072561055]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '7', '6']</data>
+      <data key="d15">['7', '6', '5']</data>
       <data key="d16">40 mph</data>
       <data key="d10">Wade Green Road</data>
       <data key="d11">False</data>
@@ -25333,7 +25333,7 @@
     <edge source="3757968395" target="9179073378" id="0">
       <data key="d8">[993536832, 308644687, 308644688, 993536825, 1462745529, 993536828, 993536829]</data>
       <data key="d9">primary</data>
-      <data key="d15">['5', '3', '4', '2']</data>
+      <data key="d15">['3', '4', '2', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">Cobb Parkway</data>
       <data key="d11">True</data>
@@ -25376,7 +25376,7 @@
     <edge source="4065308489" target="67657703" id="0">
       <data key="d8">[1047745381, 1047745382, 1526039687, 1526039688, 1526039689]</data>
       <data key="d9">primary</data>
-      <data key="d15">['5', '2', '6']</data>
+      <data key="d15">['6', '2', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">McCollum Parkway Northwest</data>
       <data key="d11">False</data>
@@ -25736,7 +25736,7 @@
       <data key="d8">[504584856, 670005899, 504584845]</data>
       <data key="d9">primary</data>
       <data key="d15">['3', '2']</data>
-      <data key="d16">['55 mph', '45 mph']</data>
+      <data key="d16">['45 mph', '55 mph']</data>
       <data key="d10">Cobb Parkway</data>
       <data key="d11">True</data>
       <data key="d18">US 41;GA 3</data>
@@ -26123,7 +26123,7 @@
     <edge source="5384033033" target="3139229395" id="0">
       <data key="d8">[631140747, 631140750, 631140749, 631653326]</data>
       <data key="d9">primary</data>
-      <data key="d15">['5', '3', '4', '2']</data>
+      <data key="d15">['3', '4', '2', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">Cobb Parkway</data>
       <data key="d11">True</data>
@@ -26177,7 +26177,7 @@
     <edge source="5422112649" target="12799659624" id="0">
       <data key="d8">[1414578755, 1414578756, 1414578757, 1414578758, 1414578759, 196945002, 755554782, 755554783]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '4', '2', '6']</data>
+      <data key="d15">['4', '6', '2', '5']</data>
       <data key="d16">25 mph</data>
       <data key="d10">South Main Street</data>
       <data key="d11">False</data>
@@ -26513,7 +26513,7 @@
     <edge source="5606279760" target="3391977693" id="0">
       <data key="d8">[993553233, 332083550]</data>
       <data key="d9">primary</data>
-      <data key="d15">['5', '2']</data>
+      <data key="d15">['2', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">McCollum Parkway Northwest</data>
       <data key="d11">True</data>
@@ -26721,7 +26721,7 @@
     <edge source="5959496022" target="322645128" id="0">
       <data key="d8">[631139346, 332408740, 332408741, 1059501231]</data>
       <data key="d9">trunk</data>
-      <data key="d15">['5', '3', '2']</data>
+      <data key="d15">['3', '2', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">Ernest West Barrett Parkway</data>
       <data key="d11">True</data>
@@ -27420,7 +27420,7 @@
     <edge source="7057225930" target="67926154" id="0">
       <data key="d8">[1158638187, 1158638188, 1158638189, 1158638190, 755535568]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '4']</data>
+      <data key="d15">['4', '5']</data>
       <data key="d16">40 mph</data>
       <data key="d10">Cherokee Street Northwest</data>
       <data key="d11">False</data>
@@ -27716,7 +27716,7 @@
     <edge source="7610883011" target="67680207" id="0">
       <data key="d8">[993553251, 993553235, 993553237]</data>
       <data key="d9">tertiary</data>
-      <data key="d15">['5', '3', '4']</data>
+      <data key="d15">['3', '4', '5']</data>
       <data key="d16">45 mph</data>
       <data key="d10">Old US 41 Highway Northwest</data>
       <data key="d11">False</data>
@@ -29294,7 +29294,7 @@
     <edge source="10215466814" target="10215729431" id="1">
       <data key="d8">[1116970553, 1116992506, 1116992501]</data>
       <data key="d9">residential</data>
-      <data key="d10">['Cloverton Way', 'Turnbridge Lane', 'Pardee Drive']</data>
+      <data key="d10">['Pardee Drive', 'Turnbridge Lane', 'Cloverton Way']</data>
       <data key="d11">False</data>
       <data key="d12">False</data>
       <data key="d13">239.15136233984433</data>
@@ -29417,7 +29417,7 @@
     <edge source="10728681089" target="67663552" id="0">
       <data key="d8">[1421725228, 1421725229, 1153628823, 1153628824, 1153627739, 1153627741]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '3', '4', '2']</data>
+      <data key="d15">['3', '4', '2', '5']</data>
       <data key="d16">35 mph</data>
       <data key="d10">Old 41 Highway</data>
       <data key="d11">False</data>
@@ -29739,8 +29739,8 @@
     <edge source="11869558273" target="67736691" id="0">
       <data key="d8">[755535569, 1049961658, 1049961659, 1418903142]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '4']</data>
-      <data key="d16">['35 mph', '40 mph']</data>
+      <data key="d15">['4', '5']</data>
+      <data key="d16">['40 mph', '35 mph']</data>
       <data key="d10">Cherokee Street Northwest</data>
       <data key="d11">False</data>
       <data key="d12">True</data>
@@ -29914,7 +29914,7 @@
     <edge source="12799659624" target="5422112649" id="0">
       <data key="d8">[1414578755, 1414578756, 1414578757, 1414578758, 1414578759, 196945002, 755554782, 755554783]</data>
       <data key="d9">secondary</data>
-      <data key="d15">['5', '4', '2', '6']</data>
+      <data key="d15">['6', '4', '2', '5']</data>
       <data key="d16">25 mph</data>
       <data key="d10">South Main Street</data>
       <data key="d11">False</data>
@@ -30051,7 +30051,7 @@
       <data key="d12">True</data>
       <data key="d13">13.047186785095665</data>
     </edge>
-    <data key="d0">2026-09-24 12:55:00</data>
+    <data key="d0">2026-09-24 21:06:29</data>
     <data key="d1">OSMnx 2.1.1</data>
     <data key="d2">epsg:4326</data>
     <data key="d3">True</data>
