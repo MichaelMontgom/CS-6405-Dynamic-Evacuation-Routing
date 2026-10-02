@@ -1,8 +1,6 @@
 import osmnx as ox
-import networkx as nx
 
-
-def download_graph(location: str):
+def download_graph(location: str) -> ox.Graph:
     graph = ox.graph.graph_from_place(
         location,
         network_type="drive",
@@ -26,7 +24,7 @@ def plot_graph(graph):
     fig2, ax2 = ox.plot.plot_graph(graph)
 
 
-def save_graph(graph: nx.Graph, filepath: str):
+def save_graph(graph: ox.Graph, filepath: str):
     try:
         ox.io.save_graphml(
             graph,
@@ -43,7 +41,7 @@ def load_graph(filepath: str):
         return ox.load_graphml(filepath=filepath)
     except Exception as e:
         print(f"Error loading graph: {filepath}")
-        print(e)
+        raise
 
 
 
