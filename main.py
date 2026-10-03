@@ -1,6 +1,6 @@
 from data.road_networks.road_networks import *
 from simulation.locations import *
-
+from simulation.visualization import *
 
 
 
@@ -19,6 +19,8 @@ if __name__ == '__main__':
     print(f"Route nodes: {len(route)}")
     print(f"Route length: {get_route_length(graph, route):,.0f} m")
     print(f"Route travel time: {get_route_travel_time(graph, route):,.0f} s")
+
+    plot_route(graph, route)
 
     rng = random.Random(42)
     print(f"Random origin/destination: {get_random_origin_destination(graph, rng)}")
