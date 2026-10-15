@@ -1,50 +1,56 @@
 from pathlib import Path
-
 import matplotlib.pyplot as plt
-import networkx as nx
 import osmnx as ox
-from matplotlib.axes import Axes
-from matplotlib.figure import Figure
 
 ROUTE_COLORS = ["red", "dodgerblue", "limegreen", "orange", "magenta", "yellow", "cyan"]
 
 
-def plot_base_graph(graph: nx.MultiDiGraph) -> tuple[Figure, Axes]:
-    return ox.plot.plot_graph(
+def plot_base_graph(graph):
+    # small test graphs are hard to see with the road network settings,
+    # so draw them bigger and put the node numbers on them
+    small_graph = graph.number_of_nodes() < 100
+
+    if small_graph:
+        node_size = 40
+        edge_width = 1.5
+    else:
+        node_size = 0
+        edge_width = 0.5
+
+    fig, ax = ox.plot.plot_graph(
         graph,
-        node_size=0,
+        node_size=node_size,
+        node_color="#555555",
         edge_color="#999999",
-        edge_linewidth=0.5,
+        edge_linewidth=edge_width,
         bgcolor="white",
         show=False,
         close=False,
     )
 
+    if small_graph:
+        for node, data in graph.nodes(data=True):
+            ax.annotate(str(node), (data["x"], data["y"]), xytext=(6, 6), textcoords="offset points")
 
-def plot_origin_destination(
-    graph: nx.MultiDiGraph,
-    ax: Axes,
-    origin_node: int,
-    destination_node: int,
-    label: bool = True,
-):
+    return fig, ax
+
+
+def plot_origin_destination(graph, ax, origin_node, destination_node, label=True):
     origin = graph.nodes[origin_node]
     destination = graph.nodes[destination_node]
 
-    ax.scatter(origin["x"], origin["y"], c="green", s=80, zorder=5, edgecolors="black",
-               label="Origin" if label else None)
-    ax.scatter(destination["x"], destination["y"], c="black", s=80, zorder=5, marker="X",
-               label="Destination" if label else None)
+    # only label the first one so the legend doesnt repeat
+    origin_label = None
+    destination_label = None
+    if label:
+        origin_label = "Origin"
+        destination_label = "Destination"
+
+    ax.scatter(origin["x"], origin["y"], c="green", s=80, zorder=5, edgecolors="black", label=origin_label)
+    ax.scatter(destination["x"], destination["y"], c="black", s=80, zorder=5, marker="X", label=destination_label)
 
 
-def plot_route(
-    graph: nx.MultiDiGraph,
-    route: list[int],
-    color: str = "red",
-    title: str | None = None,
-    filepath: str | Path | None = None,
-    show: bool = True,
-) -> tuple[Figure, Axes]:
+def plot_route(graph, route, color="red", title=None, filepath=None, show=True):
     fig, ax = plot_base_graph(graph)
 
     ox.plot.plot_graph_route(
@@ -58,25 +64,21 @@ def plot_route(
         close=False,
     )
     plot_origin_destination(graph, ax, route[0], route[-1])
-    ax.legend(loc="upper right")
+    ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
 
     return finish_figure(fig, ax, title, filepath, show)
 
 
-def plot_routes(
-    graph: nx.MultiDiGraph,
-    routes: list[list[int]],
-    labels: list[str] | None = None,
-    colors: list[str] | None = None,
-    title: str | None = None,
-    filepath: str | Path | None = None,
-    show: bool = True,
-) -> tuple[Figure, Axes]:
+def plot_routes(graph, routes, labels=None, colors=None, title=None, filepath=None, show=True):
     fig, ax = plot_base_graph(graph)
-    colors = colors or ROUTE_COLORS
 
-    for i, route in enumerate(routes):
+    if colors is None:
+        colors = ROUTE_COLORS
+
+    for i in range(len(routes)):
+        route = routes[i]
         color = colors[i % len(colors)]
+
         ox.plot.plot_graph_route(
             graph,
             route,
@@ -90,22 +92,17 @@ def plot_routes(
         )
         plot_origin_destination(graph, ax, route[0], route[-1], label=(i == 0))
 
+        # empty line just so the route shows up in the legend
         if labels:
             ax.plot([], [], color=color, linewidth=3, label=labels[i])
 
     if labels:
-        ax.legend(loc="upper right")
+        ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
 
     return finish_figure(fig, ax, title, filepath, show)
 
 
-def finish_figure(
-    fig: Figure,
-    ax: Axes,
-    title: str | None,
-    filepath: str | Path | None,
-    show: bool,
-) -> tuple[Figure, Axes]:
+def finish_figure(fig, ax, title, filepath, show):
     if title:
         ax.set_title(title)
 
@@ -118,9 +115,10 @@ def finish_figure(
     return fig, ax
 
 
-def save_figure(fig: Figure, filepath: str | Path):
+def save_figure(fig, filepath):
     filepath = Path(filepath)
     filepath.parent.mkdir(parents=True, exist_ok=True)
+
     try:
         fig.savefig(filepath, dpi=300, bbox_inches="tight")
         print(f"Figure saved: {filepath}")
