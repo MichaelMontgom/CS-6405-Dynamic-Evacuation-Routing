@@ -1,4 +1,5 @@
 from simulation.routing import best_edge_key, bpr_travel_time
+import time
 
 CAPACITY_THRESHOLD = 0.95
 
@@ -53,12 +54,21 @@ class Group:
             return None
         return self.arrival_tick - self.departure_tick
 
-    @property
     def at_destination(self):
         return self.current_node in self.destinations
 
 
+class RouterAlgorithm:
 
+    def __init__(self, router, name=None):
+        self.router = router
+        self.name = name or router.__name__
+
+    def plan_route(self, sim, group):
+        return self.router(sim, group)
+
+    def update(self, sim):
+        pass
 
 class TrafficSimulation:
     # every tick:
@@ -68,14 +78,26 @@ class TrafficSimulation:
     # travel time on a road gets locked in when the group gets on it
     # (BPR using how many cars are on it then, rounded to whole ticks)
 
-    def __init__(self, graph, groups, router, max_ticks=1000):
+    def __init__(self, graph, groups, algorithm, max_ticks=1000, closures=None):
         self.graph = graph
         self.groups = sorted(groups, key=lambda g: g.id)  # always go in the same order so runs match
-        self.router = router
         self.max_ticks = max_ticks
+
+        if callable(algorithm) and not hasattr(algorithm, "plan_route"):
+            algorithm = RouterAlgorithm(algorithm)
+        self.algorithm = algorithm
+
+        if closures is None:
+            closures = []
+        self.closures = sorted(closures)
 
         self.tick = 0
         self.history = []
+
+        # statistics gathering variables
+        self.plan_time = 0
+        self.update_time = 0
+        self.reroute_events = 0
 
         # how many vehicles are on each road right now
         self.vehicles_on = {}
@@ -95,6 +117,8 @@ class TrafficSimulation:
     def step(self):
         self.tick += 1
 
+        self.apply_closures()
+
         for g in self.groups:
             if g.status == TRAVELING:
                 self.move_group(g)
@@ -103,11 +127,61 @@ class TrafficSimulation:
             if g.status == PENDING and g.departure_tick <= self.tick:
                 self.depart_group(g)
 
+        # calculate time while algorithm runs an update on the graph
+        start = time.perf_counter()
+        self.algorithm.update(self)
+        self.update_time += time.perf_counter() - start
+
         for g in self.groups:
             if g.status == WAITING:
                 self.try_enter_next_road(g)
 
         self.record_tick()
+
+    def reroute(self, g, new_route):
+        self.reroute_events += 1
+        start = self.planning_node(g)
+
+        if new_route is None or len(new_route) == 0 or new_route[0] != start:
+            raise ValueError(f"Group {g.id}: new route has to start at node {start}")
+
+        if g.status == TRAVELING:
+            keep = g.route[:g.route_index + 2]
+        else:
+            keep = g.route[:g.route_index + 1]
+
+        old_rest = g.route[len(keep) - 1:]
+        if new_route == old_rest:
+            return False  # same route, not a flip
+
+        g.route = keep + new_route[1:]
+        g.destination = new_route[-1]
+        g.route_changes += 1
+        return True
+
+    def depart_group(self, g):
+        start = time.perf_counter()
+        route = self.algorithm.plan_route(self, g)
+        self.plan_time += time.perf_counter() - start
+
+        if route is None:
+            g.status = TRAPPED
+            return
+
+        g.route = route
+        g.route_index = 0
+        g.destination = route[-1]
+
+        if g.at_destination():
+            g.status = ARRIVED
+            g.arrival_tick = self.tick
+        else:
+            g.status = WAITING
+
+    def planning_node(self, g):
+        if g.status == TRAVELING:
+            return g.route[g.route_index + 1]
+        return g.current_node
 
     def move_group(self, g):
         g.remaining_time -= 1
@@ -119,27 +193,13 @@ class TrafficSimulation:
         g.current_edge = None
         g.route_index += 1
 
-        if g.current_node == g.destination:
+        if g.at_destination():
             g.status = ARRIVED
             g.arrival_tick = self.tick
         else:
             g.status = WAITING
 
-    def depart_group(self, g):
-        route = self.router(self, g)
 
-        if route is None:
-            g.status = TRAPPED
-            return
-
-        g.route = route
-        g.route_index = 0
-
-        if g.origin == g.destination:
-            g.status = ARRIVED
-            g.arrival_tick = self.tick
-        else:
-            g.status = WAITING
 
     def try_enter_next_road(self, g):
         u = g.current_node
@@ -188,6 +248,7 @@ class TrafficSimulation:
                 "travel_time": g.travel_time,
                 "wait_ticks": g.wait_ticks,
                 "route": g.route,
+                "route_changes": g.route_changes,
             })
         return results
 
@@ -228,4 +289,20 @@ class TrafficSimulation:
             "mean_travel_time": mean_travel_time,
             "max_travel_time": max_travel_time,
             "total_wait_ticks": total_wait,
+            "plan_time": self.plan_time,
+            "update_time": self.update_time,
+            "reroute_events": self.reroute_events,
         }
+
+    def apply_closures(self):
+        for tick, u, v in self.closures:
+            if tick != self.tick:
+                continue
+
+            if self.graph.has_edge(u, v):
+                for key in self.graph[u][v]:
+                    self.graph[u][v][key]["blocked"] = True
+
+            if self.graph.has_edge(v, u):
+                for key in self.graph[v][u]:
+                    self.graph[v][u][key]["blocked"] = True

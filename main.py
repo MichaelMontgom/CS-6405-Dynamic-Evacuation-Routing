@@ -11,26 +11,63 @@ from simulation.scenarios import *
 
 if __name__ == '__main__':
 
-    # small test on a grid
-    graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)
 
-    groups = generate_groups(graph, num_groups=10, seed=1, departure_window=5)
 
-    sim = TrafficSimulation(graph, groups, static_dijkstra_router)
-    sim.run()
+    closures = [
+        (3,10,5),
+        (3,6,11),
+    ]
 
-    print(sim.summary())
+    for name, closure_list in [("no closures", []), ("with closures", closures)]:
+        graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)
+        groups = generate_groups(graph, num_groups=10, seed=1, departure_window=5)
 
-    for g in sim.groups:
-        print(g.id, g.origin, "->", g.destination, g.status, "travel time:", g.travel_time, "waited:", g.wait_ticks)
+        # max_ticks lower so stuck groups dont make it run to 1000
+        sim = TrafficSimulation(graph, groups, static_dijkstra_router, max_ticks=300, closures=closure_list)
+        sim.run()
+
+        print()
+        print(name)
+        print(sim.summary())
+
+        for g in sim.groups:
+            print(g.id, g.origin, "->", g.destination, g.status, "travel time:", g.travel_time, "waited:", g.wait_ticks,
+                  "reroutes:", g.route_changes)
 
     routes = []
     labels = []
-    for g in sim.groups[:4]:
-        routes.append(g.route)
-        labels.append(f"group {g.id}")
+    for g in sim.groups:
+        if g.status != ARRIVED:
+            routes.append(g.route)
+            labels.append(f"group {g.id} stuck at {g.current_node}")
 
-    plot_routes(graph, routes, labels=labels, title="test grid routes")
+    if len(routes) > 0:
+        plot_routes(graph, routes, labels=labels, title="stuck groups")
+    else:
+        print("nobody got stuck")
+
+
+
+    # small test on a grid
+    # graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)
+    #
+    # groups = generate_groups(graph, num_groups=10, seed=1, departure_window=5)
+    #
+    # sim = TrafficSimulation(graph, groups, static_dijkstra_router)
+    # sim.run()
+    #
+    # print(sim.summary())
+    #
+    # for g in sim.groups:
+    #     print(g.id, g.origin, "->", g.destination, g.status, "travel time:", g.travel_time, "waited:", g.wait_ticks)
+    #
+    # routes = []
+    # labels = []
+    # for g in sim.groups[:4]:
+    #     routes.append(g.route)
+    #     labels.append(f"group {g.id}")
+    #
+    # plot_routes(graph, routes, labels=labels, title="test grid routes")
 
 
     # graph = load_graph("data/road_networks/valdosta_road_network.graphml")
