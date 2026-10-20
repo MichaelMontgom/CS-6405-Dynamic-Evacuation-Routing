@@ -5,6 +5,7 @@ from simulation.graphs import *
 from simulation.routing import *
 from simulation.traffic import *
 from simulation.scenarios import *
+from algorithms.baselines import *
 import time
 
 
@@ -12,56 +13,97 @@ import time
 
 if __name__ == '__main__':
 
-    # step 2 test - routing to the nearest sink
 
-    graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)
     sinks = [0, 24]   # top left and bottom right corners
 
-    # one node at a time
-    for node in [4, 12, 20]:
-        route = route_to_nearest_sink(graph, node, sinks)
-        print(node, "-> sink", route[-1], "route:", route, "cost:", round(route_cost(graph, route), 2))
+    # these close at tick 8, after everybody has left
+    closures = [
+        (8, 6, 11),
+        (8, 12, 13),
+        (8, 18, 19),
+        (8, 1, 2),
+    ]
 
-    # every node at once
-    tree = sink_tree(graph, sinks)
-    print("nodes that can reach a sink:", len(tree), "out of", graph.number_of_nodes())
+    # periodic interval is 20 here instead of 300 since everything on this little grid is done in like 100 ticks
+    algorithms = [StaticShortestPath(), PeriodicDijkstra(interval=20), LocalGreedyRerouting()]
 
+    for algorithm in algorithms:
+        graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)
+
+        groups = generate_groups(graph, num_groups=40, seed=1, departure_window=5, destinations=sinks)
+        for g in groups:
+            g.destinations = sinks   # any sink is fine, not just the one generate_groups picked
+
+        sim = TrafficSimulation(graph, groups, algorithm, max_ticks=300, closures=closures)
+        sim.run()
+
+        print()
+        print(algorithm.name)
+        print(sim.summary())
+
+        for g in sim.groups:
+            if g.route_changes > 0 or g.status != ARRIVED:
+                print("   group", g.id, g.origin, "->", g.destination, g.status, "reroutes:", g.route_changes, "route:", g.route)
+
+    # plot the groups that rerouted in the last run (local greedy)
     routes = []
     labels = []
-    for node in [4, 12, 20]:
-        routes.append(tree[node])
-        labels.append(f"{node} to sink {tree[node][-1]}")
+    for g in sim.groups:
+        if g.route_changes > 0:
+            routes.append(g.route)
+            labels.append(f"group {g.id}")
 
-    plot_routes(graph, routes, labels=labels, title="routes to nearest sink")
-
-    # close the first road on node 12's route and see where it goes now
-    u = tree[12][0]
-    v = tree[12][1]
-    graph.edges[u, v, 0]["blocked"] = True
-    graph.edges[v, u, 0]["blocked"] = True
-
-    new_route = route_to_nearest_sink(graph, 12, sinks)
-    print()
-    print("closed", u, "<->", v)
-    print("12 new route:", new_route, "cost:", round(route_cost(graph, new_route), 2))
-
-    # speed test on a bigger grid - one dijkstra per node vs one sink tree
-    big_graph = grid_graph(rows=30, cols=30, seed=0)
-    big_sinks = [0, 899]
-
-    start = time.time()
-    for node in big_graph.nodes:
-        route_to_nearest_sink(big_graph, node, big_sinks)
-    print()
-    print("one at a time:", round(time.time() - start, 3), "seconds")
-
-    start = time.time()
-    big_tree = sink_tree(big_graph, big_sinks)
-    print("sink tree:", round(time.time() - start, 3), "seconds")
+    plot_routes(graph, routes[:5], labels=labels[:5], title="local greedy reroutes")
 
 
+    #
+    # graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)
+    # sinks = [0, 24]   # top left and bottom right corners
+    #
+    # # one node at a time
+    # for node in [4, 12, 20]:
+    #     route = route_to_nearest_sink(graph, node, sinks)
+    #     print(node, "-> sink", route[-1], "route:", route, "cost:", round(route_cost(graph, route), 2))
+    #
+    # # every node at once
+    # tree = sink_tree(graph, sinks)
+    # print("nodes that can reach a sink:", len(tree), "out of", graph.number_of_nodes())
+    #
+    # routes = []
+    # labels = []
+    # for node in [4, 12, 20]:
+    #     routes.append(tree[node])
+    #     labels.append(f"{node} to sink {tree[node][-1]}")
+    #
+    # plot_routes(graph, routes, labels=labels, title="routes to nearest sink")
+    #
+    # # close the first road on node 12's route and see where it goes now
+    # u = tree[12][0]
+    # v = tree[12][1]
+    # graph.edges[u, v, 0]["blocked"] = True
+    # graph.edges[v, u, 0]["blocked"] = True
+    #
+    # new_route = route_to_nearest_sink(graph, 12, sinks)
+    # print()
+    # print("closed", u, "<->", v)
+    # print("12 new route:", new_route, "cost:", round(route_cost(graph, new_route), 2))
+    #
+    # # speed test on a bigger grid - one dijkstra per node vs one sink tree
+    # big_graph = grid_graph(rows=30, cols=30, seed=0)
+    # big_sinks = [0, 899]
+    #
+    # start = time.time()
+    # for node in big_graph.nodes:
+    #     route_to_nearest_sink(big_graph, node, big_sinks)
+    # print()
+    # print("one at a time:", round(time.time() - start, 3), "seconds")
+    #
+    # start = time.time()
+    # big_tree = sink_tree(big_graph, big_sinks)
+    # print("sink tree:", round(time.time() - start, 3), "seconds")
 
-    # closures test from step 1
+
+
     # closures = [
     #     (3,10,5),
     #     (3,6,11),
