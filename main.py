@@ -13,39 +13,51 @@ import time
 
 if __name__ == '__main__':
 
+    SEED = 1
 
-    sinks = [0, 24]   # top left and bottom right corners
+    base_graph = load_graph("data/road_networks/valdosta_road_network.graphml")
+    base_graph = add_simulation_attributes(base_graph)
 
-    # these close at tick 8, after everybody has left
-    closures = [
-        (8, 6, 11),
-        (8, 12, 13),
-        (8, 18, 19),
-        (8, 1, 2),
-    ]
+    sinks = pick_sinks(base_graph, 3, seed=SEED)
+    print("sinks:", sinks)
 
-    # periodic interval is 20 here instead of 300 since everything on this little grid is done in like 100 ticks
-    algorithms = [StaticShortestPath(), PeriodicDijkstra(interval=20), LocalGreedyRerouting()]
+    first_groups = generate_evacuation_groups(base_graph, 2000, sinks, seed=SEED)
+
+    # close 10 roads sometime between 30 seconds and 2 minutes in (everyone leaves in the first 5)
+    closures = generate_closures(base_graph, 10, (30, 120), seed=SEED, sinks=sinks, groups=first_groups)
+    print("closures:", closures)
+
+    algorithms = [StaticShortestPath(), PeriodicDijkstra(interval=300), LocalGreedyRerouting()]
 
     for algorithm in algorithms:
-        graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)
+        # fresh copy of the map and fresh groups every run so nothing carries over
+        graph = base_graph.copy()
+        groups = generate_evacuation_groups(graph, 2000, sinks, seed=SEED)
 
-        groups = generate_groups(graph, num_groups=40, seed=1, departure_window=5, destinations=sinks)
-        for g in groups:
-            g.destinations = sinks   # any sink is fine, not just the one generate_groups picked
-
-        sim = TrafficSimulation(graph, groups, algorithm, max_ticks=300, closures=closures)
+        start = time.time()
+        sim = TrafficSimulation(graph, groups, algorithm, max_ticks=5000, closures=closures)
         sim.run()
 
-        print()
-        print(algorithm.name)
-        print(sim.summary())
-
+        rerouted = 0
         for g in sim.groups:
-            if g.route_changes > 0 or g.status != ARRIVED:
-                print("   group", g.id, g.origin, "->", g.destination, g.status, "reroutes:", g.route_changes, "route:", g.route)
+            if g.route_changes > 0:
+                rerouted += 1
 
-    # plot the groups that rerouted in the last run (local greedy)
+        print()
+        print(algorithm.name, f"took {round(time.time() - start, 1)} seconds")
+        print(sim.summary())
+        print("groups that rerouted:", rerouted)
+
+        # just show a couple of the groups that didn't make it
+        not_out = []
+        for g in sim.groups:
+            if g.status != ARRIVED:
+                not_out.append(g)
+
+        for g in not_out[:10]:
+            print(f"    Group {g.id}: {g.origin}->{g.destination} - Status: {g.status} - Route_changes: {g.route_changes} - Stuck at: {g.current_node}")
+
+    # plot a few groups that had to reroute in the last run (local greedy)
     routes = []
     labels = []
     for g in sim.groups:
@@ -53,8 +65,48 @@ if __name__ == '__main__':
             routes.append(g.route)
             labels.append(f"group {g.id}")
 
-    plot_routes(graph, routes[:5], labels=labels[:5], title="local greedy reroutes")
+    plot_routes(graph, routes[:5], labels=labels[:5], title="valdosta - local greedy reroutes")
 
+
+
+    #
+    # sinks = [0, 24]   # top left and bottom right corners
+    #
+    # # these close at tick 8, after everybody has left
+    # closures = [
+    #     (8, 6, 11),
+    #     (8, 12, 13),
+    #     (8, 18, 19),
+    #     (8, 1, 2),
+    # ]
+    #
+    # # periodic interval is 20 here instead of 300 since everything on this little grid is done in like 100 ticks
+    # algorithms = [StaticShortestPath(), PeriodicDijkstra(interval=20), LocalGreedyRerouting()]
+    #
+    # for algorithm in algorithms:
+    #     graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)
+    #     groups = generate_evacuation_groups(graph, 40, sinks, seed=1)
+    #
+    #     sim = TrafficSimulation(graph, groups, algorithm, max_ticks=300, closures=closures)
+    #     sim.run()
+    #
+    #     print()
+    #     print(algorithm.name)
+    #     print(sim.summary())
+    #
+    #     for g in sim.groups:
+    #         if g.route_changes > 0 or g.status != ARRIVED:
+    #             print(f"    Group {g.id}: {g.origin}->{g.destination} - Status: {g.status} - Route_changes: {g.route_changes} - Route: {g.route}")
+    #
+    # # plot the groups that rerouted in the last run (local greedy)
+    # routes = []
+    # labels = []
+    # for g in sim.groups:
+    #     if g.route_changes > 0:
+    #         routes.append(g.route)
+    #         labels.append(f"group {g.id}")
+    #
+    # plot_routes(graph, routes[:5], labels=labels[:5], title="local greedy reroutes")
 
     #
     # graph = grid_graph(rows=5, cols=5, capacity=15, seed=0)

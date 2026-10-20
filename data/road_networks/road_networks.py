@@ -44,5 +44,35 @@ def load_graph(filepath: str):
         raise
 
 
+def get_lanes(data):
+    # lanes can be missing, a string like "2", or a list like ['2', '3']
+    lanes = data.get("lanes")
+
+    if lanes is None:
+        return 1
+
+    if isinstance(lanes, list):
+        lanes = lanes[0]
+
+    try:
+        return max(1, int(lanes))
+    except ValueError:
+        return 1   # sometimes its junk like "2;3", just call it 1
+
+
+def add_simulation_attributes(graph, car_length=7.5, min_capacity=10):
+    # the saved graphml files need some fixing before we can run the sim on them
+    # blocked got saved as the string "False" which python counts as True, so turn it back into a real bool
+    # capacity = how many cars fit on the road = lanes * length / how much road one car takes up
+    # really short roads get bumped up to min_capacity so groups can still fit on them
+    for u, v, key, data in graph.edges(keys=True, data=True):
+        data["blocked"] = data.get("blocked") == True or data.get("blocked") == "True"
+
+        capacity = get_lanes(data) * data["length"] / car_length
+        data["capacity"] = max(min_capacity, round(capacity))
+
+    return graph
+
+
 
 
