@@ -11,10 +11,13 @@ TRAPPED = "trapped"        # no route at all
 
 
 class Group:
-    def __init__(self, id, size, origin, destination, departure_tick=0):
+    def __init__(self, id, size, origin, destination=None, departure_tick=0, destinations=None):
         self.id = id
         self.size = size
         self.origin = origin
+        if destinations is None:
+            destinations = [destination]
+        self.destinations = destinations
         self.destination = destination
         self.departure_tick = departure_tick
 
@@ -25,6 +28,9 @@ class Group:
         self.remaining_time = 0     # ticks left on the current road
         self.arrival_tick = None
         self.wait_ticks = 0
+
+        self.route_changes = 0      # to count the number of times a group has been rerouted
+        self.free_flow_time = None  # to compare against the algorithm's time
 
     def __repr__(self):
         return f"Group(id={self.id}, size={self.size}, {self.origin} -> {self.destination}, leaves at {self.departure_tick}, {self.status})"
@@ -46,6 +52,12 @@ class Group:
         if self.arrival_tick is None:
             return None
         return self.arrival_tick - self.departure_tick
+
+    @property
+    def at_destination(self):
+        return self.current_node in self.destinations
+
+
 
 
 class TrafficSimulation:
