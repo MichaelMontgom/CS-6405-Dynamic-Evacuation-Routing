@@ -249,6 +249,7 @@ class TrafficSimulation:
                 "wait_ticks": g.wait_ticks,
                 "route": g.route,
                 "route_changes": g.route_changes,
+                "free_flow_time": g.free_flow_time,
             })
         return results
 
@@ -259,16 +260,43 @@ class TrafficSimulation:
         total_wait = 0
         travel_times = []
 
+        total_evacuees = 0
+        arrived_evacuees = 0
+        trapped_evacuees = 0
+        stuck_evacuees = 0
+
+        weighted_travel_time = 0
+        weighted_delay = 0
+        delay_evacuees = 0
+
+        path_flips_total = 0
+        weighted_flips = 0
+
         for g in self.groups:
+            total_evacuees += g.size
+            total_wait += g.wait_ticks
+            path_flips_total += g.route_changes
+            weighted_flips += g.route_changes * g.size
+
             if g.status == ARRIVED:
                 arrived += 1
+                arrived_evacuees += g.size
                 travel_times.append(g.travel_time)
+                weighted_travel_time += g.travel_time * g.size
+
+                # delay = how much longer the trip took than it would have on empty roads
+                if g.free_flow_time is not None:
+                    weighted_delay += (g.travel_time - g.free_flow_time) * g.size
+                    delay_evacuees += g.size
+
             elif g.status == TRAPPED:
                 trapped += 1
+                trapped_evacuees += g.size
             else:
                 unfinished += 1
-            total_wait += g.wait_ticks
+                stuck_evacuees += g.size
 
+            # old stuff, still per group
         mean_travel_time = None
         max_travel_time = None
         if len(travel_times) > 0:
@@ -279,7 +307,53 @@ class TrafficSimulation:
         if len(self.groups) > 0:
             completion_rate = arrived / len(self.groups)
 
+        t_clear = None
+        t_clear_90 = None
+
+        arrived_groups = []
+        for g in self.groups:
+            if g.status == ARRIVED:
+                arrived_groups.append(g)
+        arrived_groups.sort(key=lambda g: (g.arrival_tick, g.id))
+
+        if len(arrived_groups) > 0:
+            t_clear = arrived_groups[-1].arrival_tick
+
+        out_so_far = 0
+        for g in arrived_groups:
+            out_so_far += g.size
+            if out_so_far >= 0.9 * total_evacuees:
+                t_clear_90 = g.arrival_tick
+                break
+
+        # evacuation success rate - evacuees not groups
+        success_rate = 0
+        if total_evacuees > 0:
+            success_rate = arrived_evacuees / total_evacuees
+
+        # average travel time and delay per evacuee (only people who got out)
+        avg_travel_time = None
+        if arrived_evacuees > 0:
+            avg_travel_time = weighted_travel_time / arrived_evacuees
+
+        avg_delay = None
+        if delay_evacuees > 0:
+            avg_delay = weighted_delay / delay_evacuees
+
+        # how many times routes got switched, per evacuee
+        path_flips_per_vehicle = 0
+        if total_evacuees > 0:
+            path_flips_per_vehicle = weighted_flips / total_evacuees
+
+        # total time the algorithm spent thinking, and average time per reroute
+        algorithm_time = self.plan_time + self.update_time
+
+        avg_reroute_latency_ms = None
+        if self.reroute_events > 0:
+            avg_reroute_latency_ms = self.update_time / self.reroute_events * 1000
+
         return {
+
             "ticks": self.tick,
             "groups": len(self.groups),
             "arrived": arrived,
@@ -289,9 +363,24 @@ class TrafficSimulation:
             "mean_travel_time": mean_travel_time,
             "max_travel_time": max_travel_time,
             "total_wait_ticks": total_wait,
+
+
+            "t_clear": t_clear,
+            "t_clear_90": t_clear_90,
+            "total_evacuees": total_evacuees,
+            "arrived_evacuees": arrived_evacuees,
+            "trapped_evacuees": trapped_evacuees,
+            "stuck_evacuees": stuck_evacuees,
+            "success_rate": success_rate,
+            "avg_travel_time": avg_travel_time,
+            "avg_delay": avg_delay,
+            "path_flips_total": path_flips_total,
+            "path_flips_per_vehicle": path_flips_per_vehicle,
             "plan_time": self.plan_time,
             "update_time": self.update_time,
+            "algorithm_time": algorithm_time,
             "reroute_events": self.reroute_events,
+            "avg_reroute_latency_ms": avg_reroute_latency_ms,
         }
 
     def apply_closures(self):

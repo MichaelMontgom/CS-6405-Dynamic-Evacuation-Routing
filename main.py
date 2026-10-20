@@ -45,7 +45,13 @@ if __name__ == '__main__':
 
         print()
         print(algorithm.name, f"took {round(time.time() - start, 1)} seconds")
-        print(sim.summary())
+        # print(sim.summary())
+        s = sim.summary()
+        print(f"    success rate: {round(s['success_rate'] * 100, 1)}%  ({s['arrived_evacuees']}/{s['total_evacuees']} evacuees, {s['trapped_evacuees']} trapped, {s['stuck_evacuees']} stuck)")
+        print(f"    t_clear: {s['t_clear']}   t_clear_90: {s['t_clear_90']}")
+        print(f"    avg travel time: {s['avg_travel_time']}   avg delay: {s['avg_delay']}")
+        print(f"    path flips: {s['path_flips_total']}   per vehicle: {s['path_flips_per_vehicle']}")
+        print(f"    algorithm time: {round(s['algorithm_time'], 3)}s   reroutes: {s['reroute_events']}   latency: {s['avg_reroute_latency_ms']} ms")
         print("groups that rerouted:", rerouted)
 
         # just show a couple of the groups that didn't make it
