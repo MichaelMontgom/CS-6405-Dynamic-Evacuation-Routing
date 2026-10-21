@@ -74,6 +74,44 @@ def route_cost(graph, route, weight=free_flow_weight):
     return total
 
 
+def route_to_nearest_sink(graph, start, sinks, weight=free_flow_weight):
+    # cheapest route from start to whichever sink is closest
+    # a sink is a specific node or vertex in a directed graph that acts as the ultimate destination for data or traffic
+    # one dijkstra from start gives the distance to every node, then just pick the best sink
+    distances, paths = nx.single_source_dijkstra(graph, start, weight=weight)
+
+    best_sink = None
+    for sink in sorted(sinks):  # sorted so ties always pick the same sink
+        if sink not in distances:
+            continue
+        if best_sink is None or distances[sink] < distances[best_sink]:
+            best_sink = sink
+
+    if best_sink is None:
+        return None  # cant reach any sink
+    return paths[best_sink]
+
+
+def reverse_weight(weight):
+    def flipped(u, v, edges):
+        return weight(v, u, edges)
+
+    return flipped
+
+
+def sink_tree(graph, sinks, weight=free_flow_weight):
+    # route from every node to its nearest sink, with only one dijkstra
+    reversed_graph = graph.reverse(copy=False)
+    distances, paths = nx.multi_source_dijkstra(reversed_graph, sorted(sinks), weight=reverse_weight(weight))
+
+    tree = {}
+    for node in paths:
+        # paths come out as sink -> ... -> node, so flip them to node -> ... -> sink
+        tree[node] = list(reversed(paths[node]))
+
+    return tree
+
+
 # routers - the simulation calls these as router(sim, group)
 # they return a list of nodes, or None if theres no route
 
