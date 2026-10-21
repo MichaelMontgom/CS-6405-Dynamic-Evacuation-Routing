@@ -4,7 +4,7 @@ import time
 CAPACITY_THRESHOLD = 0.95
 
 # group statuses
-PENDING = "pending"        # hasnt left yet
+PENDING = "pending"        # hasn't left yet
 WAITING = "waiting"        # stuck at an intersection waiting to get on the next road
 TRAVELING = "traveling"    # on a road
 ARRIVED = "arrived"
