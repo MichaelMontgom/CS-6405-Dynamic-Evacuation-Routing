@@ -1,78 +1,89 @@
-from data.road_networks.road_networks import *
-from simulation.locations import *
-from simulation.visualization import *
-from simulation.graphs import *
-from simulation.routing import *
-from simulation.traffic import *
-from simulation.scenarios import *
-from algorithms.baselines import *
+from pathlib import Path
 import time
 
-
+import config
+from data.road_networks.road_networks import load_graph, add_simulation_attributes
+from simulation.scenarios import pick_sinks, generate_evacuation_groups, generate_closures
+from simulation.traffic import TrafficSimulation, ARRIVED
+from algorithms.baselines import StaticShortestPath, PeriodicDijkstra, LocalGreedyRerouting
+from algorithms.dcas import DCAS
 
 
 if __name__ == '__main__':
+    graph_path = Path(__file__).resolve().parent / config.GRAPH_FILE
+    base_graph = add_simulation_attributes(load_graph(graph_path))
 
-    SEED = 1
+    for seed in config.SEEDS:
+        print(f"\nseed: {seed}")
+        sink_seed = seed if config.SINK_SEED is None else config.SINK_SEED
+        if config.SINKS is None:
+            sinks = pick_sinks(base_graph, config.NUM_SINKS, seed=sink_seed)
+        else:
+            sinks = list(config.SINKS)
+        print("sinks:", sinks)
 
-    base_graph = load_graph("data/road_networks/valdosta_road_network.graphml")
-    base_graph = add_simulation_attributes(base_graph)
+        first_groups = generate_evacuation_groups(
+            base_graph, config.NUM_GROUPS, sinks, seed=seed,
+            size_range=config.GROUP_SIZE_RANGE, departure_window=config.DEPARTURE_WINDOW)
+        closure_seed = seed if config.CLOSURE_SEED is None else config.CLOSURE_SEED
+        if config.CLOSURES is None:
+            closures = generate_closures(
+                base_graph, config.NUM_CLOSURES, config.CLOSURE_TICK_RANGE,
+                seed=closure_seed, sinks=sinks, groups=first_groups, busiest=config.BUSIEST_ROADS)
+        else:
+            closures = list(config.CLOSURES)
+        print("closures:", closures)
 
-    sinks = pick_sinks(base_graph, 3, seed=SEED)
-    print("sinks:", sinks)
+        algorithms = {
+            "static": StaticShortestPath(),
+            "periodic_dijkstra": PeriodicDijkstra(interval=config.PERIODIC_INTERVAL),
+            "local_greedy": LocalGreedyRerouting(),
+            "dcas": DCAS(**config.DCAS_OPTIONS),
+        }
+        for name in config.ALGORITHMS:
+            algorithm = algorithms[name]
+            # fresh map and groups; every algorithm gets the same inputs for this seed
+            graph = base_graph.copy()
+            groups = generate_evacuation_groups(
+                graph, config.NUM_GROUPS, sinks, seed=seed,
+                size_range=config.GROUP_SIZE_RANGE, departure_window=config.DEPARTURE_WINDOW)
 
-    first_groups = generate_evacuation_groups(base_graph, 2000, sinks, seed=SEED)
+            print(f"\nrunning {algorithm.name}", flush=True)
+            start = time.time()
+            sim = TrafficSimulation(graph, groups, algorithm, max_ticks=config.MAX_TICKS, closures=closures)
+            sim.run()
 
-    # close 10 roads sometime between 30 seconds and 2 minutes in (everyone leaves in the first 5)
-    closures = generate_closures(base_graph, 10, (30, 120), seed=SEED, sinks=sinks, groups=first_groups)
-    print("closures:", closures)
+            rerouted = 0
+            for g in sim.groups:
+                if g.route_changes > 0:
+                    rerouted += 1
+            print()
+            print(algorithm.name, f"took {round(time.time() - start, 1)} seconds")
+            s = sim.summary()
+            print(f"    success rate: {s['success_rate'] * 100:.2f}%  ({s['arrived_evacuees']}/{s['total_evacuees']} evacuees, {s['trapped_evacuees']} trapped, {s['stuck_evacuees']} stuck)")
+            print(f"    t_clear: {s['t_clear']}   t_clear_90: {s['t_clear_90']}   last arrival: {s['last_arrival_tick']}")
+            print(f"    avg travel time: {s['avg_travel_time']}   avg delay: {s['avg_delay']}")
+            print(f"    path flips: {s['path_flips_total']}   per vehicle: {s['path_flips_per_vehicle']}")
+            print(f"    algorithm time: {round(s['algorithm_time'], 3)}s   reroute attempts: {s['reroute_events']}")
+            print(f"    route searches: {s['route_searches']}   replan searches: {s['replan_searches']}   avg replan search: {s['avg_replan_search_ms']} ms")
+            print("groups that rerouted:", rerouted)
 
-    algorithms = [StaticShortestPath(), PeriodicDijkstra(interval=300), LocalGreedyRerouting()]
+            not_out = []
+            for g in sim.groups:
+                if g.status != ARRIVED:
+                    not_out.append(g)
+            for g in not_out[:10]:
+                print(f"    Group {g.id}: {g.origin}->{g.destination} - Status: {g.status} - Route_changes: {g.route_changes} - Stuck at: {g.current_node}")
 
-    for algorithm in algorithms:
-        # fresh copy of the map and fresh groups every run so nothing carries over
-        graph = base_graph.copy()
-        groups = generate_evacuation_groups(graph, 2000, sinks, seed=SEED)
-
-        start = time.time()
-        sim = TrafficSimulation(graph, groups, algorithm, max_ticks=5000, closures=closures)
-        sim.run()
-
-        rerouted = 0
+    if config.PLOT_ROUTES and config.SEEDS and config.ALGORITHMS:
+        from simulation.visualization import plot_routes
+        routes = []
+        labels = []
         for g in sim.groups:
             if g.route_changes > 0:
-                rerouted += 1
-
-        print()
-        print(algorithm.name, f"took {round(time.time() - start, 1)} seconds")
-        # print(sim.summary())
-        s = sim.summary()
-        print(f"    success rate: {round(s['success_rate'] * 100, 1)}%  ({s['arrived_evacuees']}/{s['total_evacuees']} evacuees, {s['trapped_evacuees']} trapped, {s['stuck_evacuees']} stuck)")
-        print(f"    t_clear: {s['t_clear']}   t_clear_90: {s['t_clear_90']}")
-        print(f"    avg travel time: {s['avg_travel_time']}   avg delay: {s['avg_delay']}")
-        print(f"    path flips: {s['path_flips_total']}   per vehicle: {s['path_flips_per_vehicle']}")
-        print(f"    algorithm time: {round(s['algorithm_time'], 3)}s   reroutes: {s['reroute_events']}   latency: {s['avg_reroute_latency_ms']} ms")
-        print("groups that rerouted:", rerouted)
-
-        # just show a couple of the groups that didn't make it
-        not_out = []
-        for g in sim.groups:
-            if g.status != ARRIVED:
-                not_out.append(g)
-
-        for g in not_out[:10]:
-            print(f"    Group {g.id}: {g.origin}->{g.destination} - Status: {g.status} - Route_changes: {g.route_changes} - Stuck at: {g.current_node}")
-
-    # plot a few groups that had to reroute in the last run (local greedy)
-    routes = []
-    labels = []
-    for g in sim.groups:
-        if g.route_changes > 0:
-            routes.append(g.route)
-            labels.append(f"group {g.id}")
-
-    plot_routes(graph, routes[:5], labels=labels[:5], title="valdosta - local greedy reroutes")
-
+                routes.append(g.route)
+                labels.append(f"group {g.id}")
+        plot_routes(graph, routes[:5], labels=labels[:5], title=f"seed {seed} - {algorithm.name} reroutes")
 
 
     #

@@ -98,15 +98,37 @@ class TrafficSimulation:
         self.plan_time = 0
         self.update_time = 0
         self.reroute_events = 0
+        self.route_search_time = 0
+        self.route_searches = 0
+        self.replan_search_time = 0
+        self.replan_searches = 0
 
         # how many vehicles are on each road right now
         self.vehicles_on = {}
         for edge in graph.edges(keys=True):
             self.vehicles_on[edge] = 0
 
+        if hasattr(self.algorithm, "initialize"):
+            start = time.perf_counter()
+            self.algorithm.initialize(self)
+            self.plan_time += time.perf_counter() - start
+
     def has_room(self, edge, size):
         capacity = self.graph.edges[edge]["capacity"]
         return self.vehicles_on[edge] + size <= CAPACITY_THRESHOLD * capacity
+
+    def search_route(self, planner, *args, replan=False, **kwargs):
+        # measure planning calls, including failed searches, separately from update bookkeeping
+        start = time.perf_counter()
+        try:
+            return planner(*args, **kwargs)
+        finally:
+            elapsed = time.perf_counter() - start
+            self.route_search_time += elapsed
+            self.route_searches += 1
+            if replan:
+                self.replan_search_time += elapsed
+                self.replan_searches += 1
 
     def is_finished(self):
         for g in self.groups:
@@ -161,11 +183,17 @@ class TrafficSimulation:
 
     def depart_group(self, g):
         start = time.perf_counter()
-        route = self.algorithm.plan_route(self, g)
+        route = self.search_route(self.algorithm.plan_route, self, g)
         self.plan_time += time.perf_counter() - start
 
         if route is None:
             g.status = TRAPPED
+            return
+
+        if len(route) == 0:
+            # the router found paths but theyre full - wait here and let it try again
+            g.route = [g.origin]
+            g.status = WAITING
             return
 
         g.route = route
@@ -190,6 +218,8 @@ class TrafficSimulation:
 
         # done with this road
         self.vehicles_on[g.current_edge] -= g.size
+        if hasattr(self.algorithm, "finish_road"):
+            self.algorithm.finish_road(self, g)
         g.current_edge = None
         g.route_index += 1
 
@@ -204,7 +234,14 @@ class TrafficSimulation:
     def try_enter_next_road(self, g):
         u = g.current_node
         v = g.next_node
-        key = best_edge_key(self.graph, u, v)
+        if v is None:
+            g.wait_ticks += 1
+            return
+
+        if hasattr(self.algorithm, "next_edge_key"):
+            key = self.algorithm.next_edge_key(self, g)
+        else:
+            key = best_edge_key(self.graph, u, v)
 
         # road is blocked or full, wait here
         if key is None or not self.has_room((u, v, key), g.size):
@@ -220,6 +257,8 @@ class TrafficSimulation:
         g.current_edge = edge
         g.remaining_time = max(1, round(time))
         g.status = TRAVELING
+        if hasattr(self.algorithm, "enter_road"):
+            self.algorithm.enter_road(self, g)
 
     def record_tick(self):
         row = {"tick": self.tick, PENDING: 0, WAITING: 0, TRAVELING: 0, ARRIVED: 0, TRAPPED: 0}
@@ -309,6 +348,7 @@ class TrafficSimulation:
 
         t_clear = None
         t_clear_90 = None
+        last_arrival_tick = None
 
         arrived_groups = []
         for g in self.groups:
@@ -317,7 +357,9 @@ class TrafficSimulation:
         arrived_groups.sort(key=lambda g: (g.arrival_tick, g.id))
 
         if len(arrived_groups) > 0:
-            t_clear = arrived_groups[-1].arrival_tick
+            last_arrival_tick = arrived_groups[-1].arrival_tick
+            if arrived_evacuees == total_evacuees:
+                t_clear = last_arrival_tick
 
         out_so_far = 0
         for g in arrived_groups:
@@ -345,12 +387,14 @@ class TrafficSimulation:
         if total_evacuees > 0:
             path_flips_per_vehicle = weighted_flips / total_evacuees
 
-        # total time the algorithm spent thinking, and average time per reroute
+        # periodic routing shares one sink-tree search; latency is per search, not per group
         algorithm_time = self.plan_time + self.update_time
-
-        avg_reroute_latency_ms = None
-        if self.reroute_events > 0:
-            avg_reroute_latency_ms = self.update_time / self.reroute_events * 1000
+        avg_route_search_ms = None
+        if self.route_searches > 0:
+            avg_route_search_ms = self.route_search_time / self.route_searches * 1000
+        avg_replan_search_ms = None
+        if self.replan_searches > 0:
+            avg_replan_search_ms = self.replan_search_time / self.replan_searches * 1000
 
         return {
 
@@ -367,6 +411,7 @@ class TrafficSimulation:
 
             "t_clear": t_clear,
             "t_clear_90": t_clear_90,
+            "last_arrival_tick": last_arrival_tick,
             "total_evacuees": total_evacuees,
             "arrived_evacuees": arrived_evacuees,
             "trapped_evacuees": trapped_evacuees,
@@ -380,7 +425,13 @@ class TrafficSimulation:
             "update_time": self.update_time,
             "algorithm_time": algorithm_time,
             "reroute_events": self.reroute_events,
-            "avg_reroute_latency_ms": avg_reroute_latency_ms,
+            "route_searches": self.route_searches,
+            "route_search_time": self.route_search_time,
+            "replan_searches": self.replan_searches,
+            "replan_search_time": self.replan_search_time,
+            "avg_route_search_ms": avg_route_search_ms,
+            "avg_replan_search_ms": avg_replan_search_ms,
+            "avg_reroute_latency_ms": avg_replan_search_ms,   # compatibility with older callers
         }
 
     def apply_closures(self):

@@ -42,7 +42,7 @@ class PeriodicDijkstra:
 
             sinks = tuple(sorted(g.destinations))
             if sinks not in trees:
-                trees[sinks] = sink_tree(sim.graph, sinks, weight=weight)
+                trees[sinks] = sim.search_route(sink_tree, sim.graph, sinks, weight=weight, replan=True)
             tree = trees[sinks]
 
             start = sim.planning_node(g)
@@ -72,7 +72,7 @@ class LocalGreedyRerouting:
             if best_edge_key(sim.graph, g.current_node, g.next_node) is not None:
                 continue
 
-            new_route = route_to_nearest_sink(sim.graph, g.current_node, g.destinations)
+            new_route = sim.search_route(route_to_nearest_sink, sim.graph, g.current_node, g.destinations, replan=True)
             if new_route is None:
                 g.status = TRAPPED
             else:
